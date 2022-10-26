@@ -13,15 +13,9 @@ h1 {
 .sidebar {
     grid-column: 1;
 }
-.sidebar #searchBtn {
-    color: white;
-    background-color: rgb(112, 112, 243);
-    margin-top: 10px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    min-width: 100%;
+.searchArea {
+    border-bottom: 2px solid;
+    border-color: gray
 }
 .sidebar #searchBar{
     border-top-right-radius: 5px;
@@ -32,10 +26,27 @@ h1 {
     min-width: 100%;
     padding: 3%;
 }
+.sidebar #searchBtn {
+    color: white;
+    background-color: rgb(112, 112, 243);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    min-width: 100%;
+    ju
+}
+
 
 .displayArea {
     grid-column: 2;
     border: 2px solid;
     margin: 10px;
     margin-right: 10%;
+}
+
+.current {
+    margin: 10px;
 }
