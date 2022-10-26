@@ -12,11 +12,19 @@
 </header>
 <body>
     <section class="sidebar">
-        <h2>Search for a City</h2>
+        <h2>Search for a City:</h2>
         <input type="search" placeholder="Search for a City" id="searchBar">
-        <button id="searchBtn">Search</button>
+        <div><button id="searchBtn">Search</button></div>
+        <div class="searchHistory"></div>
     </section>
-    <section class="displayArea"></section>
+    <section class="displayArea">
+        <div class="current">
+            <h2 id="Date"></h2>
+            <h3 id="temp"></h3>
+            <h3 id="wind"></h3>
+            <h3 id="humidity"></h3>
+        </div>
+    </section>
     <script src=".\assets\script.js"></script>
 </body>
 </html>
