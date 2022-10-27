@@ -13,17 +13,13 @@ const searchHistoryBox = document.querySelector(".searchHistory");
 const API_KEY = "9d35e655e95e27d60138ab4d4be043b1";
 const twhObj = {};
 
-
-function saveSearchHistory() {
-    // saves the users input to localStorage
-    // TODO: Use Template Literals to display the search history button 
-    localStorage.setItem('search_history',JSON.stringify(searchBar.value));
-
-    // Add the previous search to the DOM
+function addToDOM() {
+    // Add the inputted text search to the DOM
     const historyBtn = `
         <button id="${searchBar.value}">${searchBar.value}</button>
         <style>
             #${searchBar.value} {
+                background-color: lightgray;
                 display: flex;
                 flex-flow: row;
                 justify-content: center;
@@ -33,6 +29,26 @@ function saveSearchHistory() {
         </style>
     `;
     searchHistoryBox.innerHTML += historyBtn;
+}
+
+function saveSearchHistory() {
+    // saves the users input to localStorage
+    const save = localStorage.getItem("search_history");
+
+    // Checks is the save is in local storage
+    if (save) {
+        // checks if teh input is in the local storage
+        // TODO: Review to make better
+        if (localStorage.getItem("search_history").includes(searchBar.value)) {
+        } else {
+            localStorage.setItem("search_history",JSON.stringify(searchBar.value));
+            addToDOM
+        }
+    } else {
+        localStorage.setItem("search_history",JSON.stringify(searchBar.value));
+        addToDOM()
+    }
+
 }
 
 async function apiFetch(search) {
@@ -71,5 +87,6 @@ searchBtn.addEventListener("click",function (e) {
     currentTemp.textContent = "";
     currentWind.textContent = "";
     currentHumidity.textContent = "";
+    //searchBar.value = "Denver";
     apiFetch(searchBar.value);
 });
