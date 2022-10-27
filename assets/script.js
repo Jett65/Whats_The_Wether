@@ -26,13 +26,19 @@ function addToDOM() {
                 margin-top: 10px;
                 min-width: 100%  
             }
-        </style>
-    `;
+        </style>   
+    `; 
+    const Btn = document.getElementById(`${searchBar.value}`);
+    Btn.addEventListener("click",function (e) {
+            console.log("Yes")
+    });
+
     searchHistoryBox.innerHTML += historyBtn;
 }
 
 function saveSearchHistory() {
     // saves the users input to localStorage
+    const saveObj = {};
     const save = localStorage.getItem("search_history");
 
     // Checks is the save is in local storage
@@ -41,12 +47,13 @@ function saveSearchHistory() {
         // TODO: Review to make better
         if (localStorage.getItem("search_history").includes(searchBar.value)) {
         } else {
-            localStorage.setItem("search_history",JSON.stringify(searchBar.value));
-            addToDOM
+
+            localStorage.setItem("search_history",JSON.stringify());
+            addToDOM();
         }
     } else {
-        localStorage.setItem("search_history",JSON.stringify(searchBar.value));
-        addToDOM()
+        localStorage.setItem("search_history",JSON.stringify());
+        addToDOM();
     }
 
 }
