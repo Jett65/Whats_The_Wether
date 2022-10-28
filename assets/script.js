@@ -14,47 +14,38 @@ const API_KEY = "9d35e655e95e27d60138ab4d4be043b1";
 const twhObj = {};
 
 function addToDOM() {
-    // Add the inputted text search to the DOM
-    const historyBtn = `
-        <button id="${searchBar.value}">${searchBar.value}</button>
-        <style>
-            #${searchBar.value} {
-                background-color: lightgray;
-                display: flex;
-                flex-flow: row;
-                justify-content: center;
-                margin-top: 10px;
-                min-width: 100%  
-            }
-        </style>   
-    `; 
-    const Btn = document.getElementById(`${searchBar.value}`);
-    Btn.addEventListener("click",function (e) {
-            console.log("Yes")
+    // Creates the search history buttons 
+    const historyBtn = document.createElement("hutton");
+    historyBtn.innerText = searchBar.value;
+
+    // Aloes the button to be clicked
+    historyBtn.addEventListener('click',function (e) {
+        searchBar.value = historyBtn.innerText;
+        apiFetch(searchBar.value);
+        //searchBtn.click()
     });
 
-    searchHistoryBox.innerHTML += historyBtn;
 }
 
 function saveSearchHistory() {
     // saves the users input to localStorage
-    const saveObj = {};
-    const save = localStorage.getItem("search_history");
+    // const saveObj = {};
+    // const save = localStorage.getItem("search_history");
 
-    // Checks is the save is in local storage
-    if (save) {
-        // checks if teh input is in the local storage
-        // TODO: Review to make better
-        if (localStorage.getItem("search_history").includes(searchBar.value)) {
-        } else {
+    // // Checks is the save is in local storage
+    // if (save) {
+    //     // checks if teh input is in the local storage
+    //     // TODO: Review to make better
+    //     if (localStorage.getItem("search_history").includes(searchBar.value)) {
+    //     } else {
 
-            localStorage.setItem("search_history",JSON.stringify());
-            addToDOM();
-        }
-    } else {
-        localStorage.setItem("search_history",JSON.stringify());
-        addToDOM();
-    }
+    //         localStorage.setItem("search_history",JSON.stringify());
+    //         addToDOM();
+    //     }
+    // } else {
+    //     localStorage.setItem("search_history",JSON.stringify());
+    //     addToDOM();
+    // }
 
 }
 
@@ -76,7 +67,7 @@ async function apiFetch(search) {
             Object.assign(twhObj,{ wind1: wind });
             Object.assign(twhObj,{ humidity1: humidity });
             displayWether();
-            saveSearchHistory();
+            addToDOM();
         });
 }
 
@@ -97,3 +88,6 @@ searchBtn.addEventListener("click",function (e) {
     //searchBar.value = "Denver";
     apiFetch(searchBar.value);
 });
+
+
+// TODO: Find out why the history buttons wont display
