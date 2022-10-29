@@ -13,40 +13,41 @@ const searchHistoryBox = document.querySelector(".searchHistory");
 const API_KEY = "9d35e655e95e27d60138ab4d4be043b1";
 const twhObj = {};
 
+function displayHistory() {
+    const stord = localStorage.getItem("savedSearches")
+    for (i = 0; i < stord.length; )
+}
+
 function addToDOM() {
     // Creates the search history buttons 
-    const historyBtn = document.createElement("hutton");
+    const historyBtn = document.createElement("button");
     historyBtn.innerText = searchBar.value;
 
     // Aloes the button to be clicked
     historyBtn.addEventListener('click',function (e) {
         searchBar.value = historyBtn.innerText;
-        apiFetch(searchBar.value);
-        //searchBtn.click()
+        //apiFetch(searchBar.value);
+        searchBtn.click();
     });
-
+    searchHistoryBox.append(historyBtn);
 }
 
 function saveSearchHistory() {
-    // saves the users input to localStorage
-    // const saveObj = {};
-    // const save = localStorage.getItem("search_history");
-
-    // // Checks is the save is in local storage
-    // if (save) {
-    //     // checks if teh input is in the local storage
-    //     // TODO: Review to make better
-    //     if (localStorage.getItem("search_history").includes(searchBar.value)) {
-    //     } else {
-
-    //         localStorage.setItem("search_history",JSON.stringify());
-    //         addToDOM();
-    //     }
-    // } else {
-    //     localStorage.setItem("search_history",JSON.stringify());
-    //     addToDOM();
-    // }
-
+    // Saves searched to local storage
+    const seraches = [];
+    const stord = localStorage.getItem("savedSearches");
+    if (stord) {
+        if (stord.includes(searchBar.value.toLowerCase())) {
+        } else {
+            seraches.push(stord,searchBar.value.toLowerCase());
+            localStorage.setItem("savedSearches",seraches);
+            addToDOM();
+        }
+    } else {
+        seraches.push(stord,searchBar.value.toLowerCase());
+        localStorage.setItem("savedSearches",seraches);
+        addToDOM();
+    }
 }
 
 async function apiFetch(search) {
@@ -67,7 +68,7 @@ async function apiFetch(search) {
             Object.assign(twhObj,{ wind1: wind });
             Object.assign(twhObj,{ humidity1: humidity });
             displayWether();
-            addToDOM();
+            saveSearchHistory();
         });
 }
 
@@ -89,5 +90,5 @@ searchBtn.addEventListener("click",function (e) {
     apiFetch(searchBar.value);
 });
 
-
-// TODO: Find out why the history buttons wont display
+// TODO: loop throw storage and display the buttons
+// TODO: Icons
