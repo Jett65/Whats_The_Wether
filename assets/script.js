@@ -14,19 +14,26 @@ const API_KEY = "9d35e655e95e27d60138ab4d4be043b1";
 const twhObj = {};
 
 function displayHistory() {
-    const stord = localStorage.getItem("savedSearches")
-    for (i = 0; i < stord.length; )
+    // Displays the search history when the page lodes
+    const stored = localStorage.getItem("search-history")
+    const list = []
+    if (stored) {
+        for (i = 0; i < JSON.parse(stored).length; i++) {
+            // addToDOM(localStorage.getItem("search-history", JSON.parse(i)))
+            list.push(localStorage.getItem("search-history", JSON.parse(i)))
+        }
+    }
+    console.log(list)
 }
 
-function addToDOM() {
+function addToDOM(text) {
     // Creates the search history buttons 
     const historyBtn = document.createElement("button");
-    historyBtn.innerText = searchBar.value;
+    historyBtn.innerText = text;
 
     // Aloes the button to be clicked
     historyBtn.addEventListener('click',function (e) {
-        searchBar.value = historyBtn.innerText;
-        //apiFetch(searchBar.value);
+        text = historyBtn.innerText;
         searchBtn.click();
     });
     searchHistoryBox.append(historyBtn);
@@ -34,21 +41,24 @@ function addToDOM() {
 
 function saveSearchHistory() {
     // Saves searched to local storage
-    const seraches = [];
-    const stord = localStorage.getItem("savedSearches");
-    if (stord) {
-        if (stord.includes(searchBar.value.toLowerCase())) {
-        } else {
-            seraches.push(stord,searchBar.value.toLowerCase());
-            localStorage.setItem("savedSearches",seraches);
-            addToDOM();
-        }
-    } else {
-        seraches.push(stord,searchBar.value.toLowerCase());
-        localStorage.setItem("savedSearches",seraches);
-        addToDOM();
+    if (localStorage.getItem("search-history") === null) {
+        localStorage.setItem("search-history","[]");
     }
+    if (localStorage.getItem("search-history").includes(searchBar.value.toLowerCase())) {
+
+    } else {
+        const old_search = JSON.parse(localStorage.getItem("search-history"));
+        old_search.push(searchBar.value.toLowerCase());
+        localStorage.setItem("search-history",JSON.stringify(old_search));
+        addToDOM(searchBar.value);
+    }
+    
+
 }
+
+
+
+
 
 async function apiFetch(search) {
     // Added the elements needed to the twhObj
@@ -69,6 +79,7 @@ async function apiFetch(search) {
             Object.assign(twhObj,{ humidity1: humidity });
             displayWether();
             saveSearchHistory();
+            
         });
 }
 
@@ -79,6 +90,8 @@ function displayWether() {
     currentWind.textContent += `Wind: ${twhObj.wind1} MPH`;
     currentHumidity.textContent += `Humidity: ${twhObj.humidity1}%`;
 }
+
+displayHistory();
 
 searchBtn.addEventListener("click",function (e) {
     // Called when the search button is clicked
