@@ -104,7 +104,7 @@ function displayWether(data,index,day) {
     const temp = (data['list'][`${index}`]['main']['temp']);
     const wind = (data['list'][`${index}`]['wind']['speed']);
     const humidity = (data['list'][`${index}`]['main']['humidity']);
-    const geticon = (data['list'][`${index}`]['weather']['icon']);
+    const geticon = (data['list'][`${index}`]['weather']['0']['icon']);
     Object.assign(twhObj,{ date1: date });
     Object.assign(twhObj,{ temp1: temp });
     Object.assign(twhObj,{ wind1: wind });
@@ -121,7 +121,7 @@ function displayWether(data,index,day) {
     dayTemp.textContent += `Temp: ${twhObj.temp1} °F`;
     dayWind.textContent += `Wind: ${twhObj.wind1} MPH`;
     dayHumidity.textContent += `Humidity: ${twhObj.humidity1}%`;
-    console.log(data['weather']);
+    console.log(geticon);
 }
 
 async function apiFetch(search) {
