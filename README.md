@@ -25,4 +25,4 @@ Please refer to the LICENSE in the repo.
 ![Screenshot of site](./assets/images/wetherdashbotd_searched.png)
 
 ## Links
-[An Internal Link](https://jett65.github.io/Whats_the_wether/)
+[Pages link](https://jett65.github.io/Whats_the_wether/)
