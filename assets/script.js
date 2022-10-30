@@ -16,14 +16,12 @@ const twhObj = {};
 function displayHistory() {
     // Displays the search history when the page lodes
     const stored = localStorage.getItem("search-history")
-    const list = []
     if (stored) {
-        for (i = 0; i < JSON.parse(stored).length; i++) {
-            // addToDOM(localStorage.getItem("search-history", JSON.parse(i)))
-            list.push(localStorage.getItem("search-history", JSON.parse(i)))
+        const arrayStored = Array.from(JSON.parse(stored))
+        for (i = 0; i < arrayStored.length; i++) {
+             addToDOM(arrayStored[i])
         }
     }
-    console.log(list)
 }
 
 function addToDOM(text) {
@@ -33,8 +31,9 @@ function addToDOM(text) {
 
     // Aloes the button to be clicked
     historyBtn.addEventListener('click',function (e) {
-        text = historyBtn.innerText;
+        searchBar.value = historyBtn.innerText;
         searchBtn.click();
+        console.log("Yes")
     });
     searchHistoryBox.append(historyBtn);
 }
@@ -55,10 +54,6 @@ function saveSearchHistory() {
     
 
 }
-
-
-
-
 
 async function apiFetch(search) {
     // Added the elements needed to the twhObj
