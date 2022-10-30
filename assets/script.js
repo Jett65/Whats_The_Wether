@@ -28,6 +28,13 @@ function addToDOM(text) {
     // Creates the search history buttons 
     const historyBtn = document.createElement("button");
     historyBtn.innerText = text;
+    historyBtn.style.display = "flex"
+    historyBtn.style.minWidth = "100%"
+    historyBtn.style.justifyContent = "center"
+    historyBtn.style.marginTop = "10px"
+    historyBtn.style.fontWeight = "bold"
+    historyBtn.style.backgroundColor = "lightgray"
+
 
     // Aloes the button to be clicked
     historyBtn.addEventListener('click',function (e) {
