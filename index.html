@@ -12,32 +12,31 @@
 </header>
 <body>
     <section class="sidebar">
-        <h2>Search for a City</h2>
-        <input type="search" placeholder="Search for a City" id="searchBar">
-        <button id="searchBtn">Search</button>
+        <div class="searchArea">
+            <h2>Search for a City:</h2>
+            <input type="search" placeholder="Search for a City" id="searchBar">
+            <div><button id="searchBtn">Search</button></div>
+        </div>
+        <div class="searchHistory"></div>
     </section>
-    <section class="displayArea"></section>
+    <section class="displayArea">
+        <div class="current">
+            <h2 id="Date"></h2>
+            <h3 id="temp"></h3>
+            <h3 id="wind"></h3>
+            <h3 id="humidity"></h3>
+        </div>
+    </section>
     <script src=".\assets\script.js"></script>
 </body>
 </html>
 
 <!--Fetchers-->
 
-<!--TODO: Alow user to search for a city-->
-<!--TODO: Present the user current and future conditions for the searched city-->
+<!--TODO: Present the user future conditions for the searched city-->
 <!--TODO: Save the searched city to a search history-->
-<!--TODO: The current day weth box should include the city name, the date, an 
-    icon representation of weather conditions the temperature, 
-    the humidity and the wind speed-->
 <!--TODO: Display a five day forecast where each day shows the same 
     things as the current day-->
 <!--TODO: When the city's in the search history are clicked it displays 
     as if it was seared-->
-
-<!--Work Order-->
-
-<!--TODO: html-->
-<!--TODO: find out how to use the api-->
-<!--TODO: find a good datetime api-->
-<!--TODO: js-->
-<!--TODO: css-->
+<!--TODO: Comment the css-->

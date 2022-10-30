@@ -1,53 +1,102 @@
 const searchBar = document.querySelector("#searchBar");
 const searchBtn = document.querySelector("#searchBtn");
-const searchHistory = document.querySelector(".searchHistory");
+// Display area Selectors ----------------------------------
+//Current Day
 const displayArea = document.querySelector(".displayArea");
-
+const currentDate = document.querySelector(".current #Date");
+const currentTemp = document.querySelector(".current #temp");
+const currentWind = document.querySelector(".current #wind");
+const currentHumidity = document.querySelector(".current #humidity");
+// Search history ------------------------------------------
+const searchHistoryBox = document.querySelector(".searchHistory");
 
 const API_KEY = "9d35e655e95e27d60138ab4d4be043b1";
 const twhObj = {};
 
-
-function saveSearchHistory(search) {
-    // saves the users input to localStorage
-    // TODO: Use Template Literals to display the search history button 
+function displayHistory() {
+    // Displays the search history when the page lodes
+    const stored = localStorage.getItem("search-history")
+    if (stored) {
+        const arrayStored = Array.from(JSON.parse(stored))
+        for (i = 0; i < arrayStored.length; i++) {
+             addToDOM(arrayStored[i])
+        }
+    }
 }
 
-function apiFetch(search) {
+function addToDOM(text) {
+    // Creates the search history buttons 
+    const historyBtn = document.createElement("button");
+    historyBtn.innerText = text;
+
+    // Aloes the button to be clicked
+    historyBtn.addEventListener('click',function (e) {
+        searchBar.value = historyBtn.innerText;
+        searchBtn.click();
+        console.log("Yes")
+    });
+    searchHistoryBox.append(historyBtn);
+}
+
+function saveSearchHistory() {
+    // Saves searched to local storage
+    if (localStorage.getItem("search-history") === null) {
+        localStorage.setItem("search-history","[]");
+    }
+    if (localStorage.getItem("search-history").includes(searchBar.value.toLowerCase())) {
+
+    } else {
+        const old_search = JSON.parse(localStorage.getItem("search-history"));
+        old_search.push(searchBar.value.toLowerCase());
+        localStorage.setItem("search-history",JSON.stringify(old_search));
+        addToDOM(searchBar.value);
+    }
+    
+
+}
+
+async function apiFetch(search) {
     // Added the elements needed to the twhObj
-    const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=imperial&appid=${API_KEY}`;
-    fetch(API_URL)
+    const API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${search}&units=imperial&appid=${API_KEY}`;
+    await fetch(API_URL)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
             console.log(data);
-            const temp = (data['main'])['temp'];
-            const wind = (data['wind'])['speed'];
-            const humidity = (data['main'])['humidity'];
+            const date = (data['list']['0']['dt_txt']).substring(0,10);
+            const temp = (data['list']['0']['main']['temp']);
+            const wind = (data['list']['0']['wind']['speed']);
+            const humidity = (data['list']['0']['main']['humidity']);
+            Object.assign(twhObj,{ date1: date });
             Object.assign(twhObj,{ temp1: temp });
             Object.assign(twhObj,{ wind1: wind });
             Object.assign(twhObj,{ humidity1: humidity });
+            displayWether();
+            saveSearchHistory();
+            
         });
 }
 
 function displayWether() {
     // Displays the whether card to the page
-    const wetherToday = document.createElement('div');
-    wetherToday.id = "current";
-    var new_ = wetherToday.innerHTML = `
-        <h2 id="Date"></h2>
-        <h3 id="temp">Temp: ${twhObj[temp1]}°F</h3>
-        <h3 id="wind">Wind: ${twhObj[wind1]} MPH</h3>
-        <h3 id="humidity">Humidity: ${twhObj[humidity1]}%</h3>
-        <div class="searchHistory"></div>
-    `;
-    console.log(new_);
+    currentDate.textContent += `${searchBar.value} (${twhObj.date1})`;
+    currentTemp.textContent += `Temp: ${twhObj.temp1} °F`;
+    currentWind.textContent += `Wind: ${twhObj.wind1} MPH`;
+    currentHumidity.textContent += `Humidity: ${twhObj.humidity1}%`;
 }
+
+displayHistory();
 
 searchBtn.addEventListener("click",function (e) {
     // Called when the search button is clicked
+    currentDate.textContent = "";
+    currentTemp.textContent = "";
+    currentWind.textContent = "";
+    currentHumidity.textContent = "";
+    //searchBar.value = "Denver";
     apiFetch(searchBar.value);
-    //displayWether();
-    console.log(twhObj['temp1'])
 });
+
+// TODO: loop throw storage and display the buttons
+// TODO: Icons
