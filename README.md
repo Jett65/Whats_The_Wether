@@ -22,7 +22,7 @@ Please refer to the LICENSE in the repo.
 
 ## Screen Shots
 ![Screenshot of site](./assets/images/openPage.png)
-![Screenshot of site](.\assets\images\wetherdashbotd_searched.png)
+![Screenshot of site](./assets/images/wetherdashbotd_searched.png)
 
 ## Links
 [An Internal Link]()
